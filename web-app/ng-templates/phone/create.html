@@ -1,0 +1,110 @@
+
+<div class="page-header">
+	<h1>Create Phone</h1>
+</div>
+<alert level="{{message.level}}" text="{{message.text}}"/>
+<form name="form" data-ng-submit="save(item)" class="form-horizontal">
+
+	<div class="control-group" data-ng-class="{error: errors.additionalFeature}">
+		<label class="control-label" for="additionalFeature">Additional Feature</label>
+		<div class="controls">
+            <input type="text" id="additionalFeature" name="additionalFeature" data-ng-model="item.additionalFeature">
+
+			<span class="help-inline" data-ng-show="errors.additionalFeature">{{errors.additionalFeature}}</span>
+		</div>
+	</div>
+	
+	<div class="control-group" data-ng-class="{error: errors.age}">
+		<label class="control-label" for="age">Age</label>
+		<div class="controls">
+            <input type="number" id="age" name="age" data-ng-model="item.age" required>
+
+			<span class="help-inline" data-ng-show="errors.age">{{errors.age}}</span>
+		</div>
+	</div>
+	
+	<div class="control-group" data-ng-class="{error: errors.battery}">
+		<label class="control-label" for="battery">Battery</label>
+		<div class="controls">
+            <input type="text" id="battery" name="battery" data-ng-model="item.battery">
+
+			<span class="help-inline" data-ng-show="errors.battery">{{errors.battery}}</span>
+		</div>
+	</div>
+	
+	<div class="control-group" data-ng-class="{error: errors.camera}">
+		<label class="control-label" for="camera">Camera</label>
+		<div class="controls">
+            <input type="text" id="camera" name="camera" data-ng-model="item.camera">
+
+			<span class="help-inline" data-ng-show="errors.camera">{{errors.camera}}</span>
+		</div>
+	</div>
+	
+	<div class="control-group" data-ng-class="{error: errors.connectivity}">
+		<label class="control-label" for="connectivity">Connectivity</label>
+		<div class="controls">
+            <input type="text" id="connectivity" name="connectivity" data-ng-model="item.connectivity">
+
+			<span class="help-inline" data-ng-show="errors.connectivity">{{errors.connectivity}}</span>
+		</div>
+	</div>
+	
+	<div class="control-group" data-ng-class="{error: errors.description}">
+		<label class="control-label" for="description">Description</label>
+		<div class="controls">
+            <input type="text" id="description" name="description" data-ng-model="item.description">
+
+			<span class="help-inline" data-ng-show="errors.description">{{errors.description}}</span>
+		</div>
+	</div>
+	
+	<div class="control-group" data-ng-class="{error: errors.display}">
+		<label class="control-label" for="display">Display</label>
+		<div class="controls">
+            <input type="text" id="display" name="display" data-ng-model="item.display">
+
+			<span class="help-inline" data-ng-show="errors.display">{{errors.display}}</span>
+		</div>
+	</div>
+	
+	<div class="control-group" data-ng-class="{error: errors.hardware}">
+		<label class="control-label" for="hardware">Hardware</label>
+		<div class="controls">
+            <input type="text" id="hardware" name="hardware" data-ng-model="item.hardware">
+
+			<span class="help-inline" data-ng-show="errors.hardware">{{errors.hardware}}</span>
+		</div>
+	</div>
+	
+	<div class="control-group" data-ng-class="{error: errors.name}">
+		<label class="control-label" for="name">Name</label>
+		<div class="controls">
+            <input type="text" id="name" name="name" data-ng-model="item.name">
+
+			<span class="help-inline" data-ng-show="errors.name">{{errors.name}}</span>
+		</div>
+	</div>
+	
+	<div class="control-group" data-ng-class="{error: errors.os}">
+		<label class="control-label" for="os">Os</label>
+		<div class="controls">
+            <input type="text" id="os" name="os" data-ng-model="item.os">
+
+			<span class="help-inline" data-ng-show="errors.os">{{errors.os}}</span>
+		</div>
+	</div>
+	
+	<div class="control-group" data-ng-class="{error: errors.snippet}">
+		<label class="control-label" for="snippet">Snippet</label>
+		<div class="controls">
+            <input type="text" id="snippet" name="snippet" data-ng-model="item.snippet">
+
+			<span class="help-inline" data-ng-show="errors.snippet">{{errors.snippet}}</span>
+		</div>
+	</div>
+	
+	<div class="form-actions">
+		<button type="submit" class="btn btn-primary" data-ng-disabled="form.$invalid"><i class="icon-ok"></i> Create</button>
+	</div>
+</form>

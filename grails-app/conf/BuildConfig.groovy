@@ -60,8 +60,10 @@ grails.project.dependency.resolution = {
 
         compile ":angularjs-resources:1.0.6"
 
-        compile ":angular-scaffolding:1.0-SNAPSHOT"
+        compile ":grails-angular-scaffolding:1.0.6-SNAPSHOT"
 
         compile ':cache:1.0.1'
+
+        compile ":gson:1.1.4"
     }
 }
