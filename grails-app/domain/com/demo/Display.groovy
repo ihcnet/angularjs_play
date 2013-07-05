@@ -1,4 +1,4 @@
-package phone
+package com.demo
 
 class Display {
 

@@ -1,15 +1,15 @@
-package angularjs_play
+package com.demo
 
 
 
 import grails.test.mixin.*
-import phone.Connectivity
+import com.demo.Android
 
 /**
  * See the API for {@link grails.test.mixin.domain.DomainClassUnitTestMixin} for usage instructions
  */
-@TestFor(Connectivity)
-class ConnectivityTests {
+@TestFor(Android)
+class AndroidTests {
 
     void testSomething() {
         fail "Implement me"

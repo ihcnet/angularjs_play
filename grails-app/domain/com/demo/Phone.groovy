@@ -1,4 +1,4 @@
-package phone
+package com.demo
 
 class Phone {
 
@@ -7,7 +7,7 @@ class Phone {
     int age
     Feature additionalFeature
 
-    static hasMany = [providers:Provider, images:Image]
+    static hasMany = [providers: Provider, images: Image]
 
     Android os
     Battery battery

@@ -1,9 +1,8 @@
-package phone
+package com.demo
 
 
 
 import grails.test.mixin.*
-import org.junit.*
 
 @TestFor(SizeAndWeight)
 class SizeAndWeightTests {

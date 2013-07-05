@@ -1,15 +1,15 @@
-package phone
+package com.demo
 
 
 
 import grails.test.mixin.*
-import org.junit.*
+import com.demo.Camera
 
 /**
  * See the API for {@link grails.test.mixin.domain.DomainClassUnitTestMixin} for usage instructions
  */
-@TestFor(Strorage)
-class StrorageTests {
+@TestFor(Camera)
+class CameraTests {
 
     void testSomething() {
         fail "Implement me"
