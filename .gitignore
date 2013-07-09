@@ -1,25 +1,24 @@
-#IDEA
-.idea/
-*.iml
-*.ipr
-*.iws
-
-#Eclipse
-.settings/
-.classpath
-.project
-
-#compiled sources
-target/*
-target-eclipse/*
-out/*
-*.zip
-
-#logs
+# Grails
+target
 *.log
+/*.zip
+/plugin.xml
+*.db
 
-#other
-plugin.xml
-dependencies.groovy
-/test-tmp/
-/src/docs/ref/Resources/
+# IntelliJ stuff
+.idea
+*.ipr
+*.iml
+*.iws
+/out
+
+# Generated scaffolding
+/test/apps/grails-ng/grails-app/views/*/_form.gsp
+/test/apps/grails-ng/grails-app/views/*/create.gsp
+/test/apps/grails-ng/grails-app/views/*/edit.gsp
+/test/apps/grails-ng/grails-app/views/*/list.gsp
+/test/apps/grails-ng/grails-app/views/*/show.gsp
+*Tests.groovy
+
+# OSX stuff
+.DS_Store
