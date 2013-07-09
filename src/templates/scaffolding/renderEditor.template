@@ -1,0 +1,131 @@
+<%
+	def name = prefix ? "${prefix}${property.name}" : property.name
+
+    if (property.type == Boolean || property.type == boolean)
+            out << renderBooleanEditor(domainClass, property, name)
+        else if (property.type && Number.isAssignableFrom(property.type) || (property.type?.isPrimitive() && property.type != boolean))
+            out << renderNumberEditor(domainClass, property, name)
+        else if (property.type == String)
+            out << renderStringEditor(domainClass, property, name)
+        else if (property.type == Date || property.type == java.sql.Date || property.type == java.sql.Time || property.type == Calendar)
+            out << renderDateEditor(domainClass, property)
+        else if (property.type == URL)
+            out << renderStringEditor(domainClass, property, name)
+        else if (property.type && property.isEnum())
+            out << renderEnumEditor(domainClass, property)
+        else if (property.type == TimeZone)
+            out << renderSelectTypeEditor("timeZone", domainClass, property)
+        else if (property.type == Locale)
+            out << renderSelectTypeEditor("locale", domainClass, property)
+        else if (property.type == Currency)
+            out << renderSelectTypeEditor("currency", domainClass, property)
+        else if (property.type==([] as Byte[]).class) //TODO: Bug in groovy means i have to do this :(
+            out << renderByteArrayEditor(domainClass, property)
+        else if (property.type==([] as byte[]).class) //TODO: Bug in groovy means i have to do this :(
+            out << renderByteArrayEditor(domainClass, property)
+        else if (property.manyToOne || property.oneToOne)
+            out << renderManyToOne(domainClass, property, name)
+        else if ((property.oneToMany && !property.bidirectional) || (property.manyToMany && property.isOwningSide())) {
+            def str = renderManyToOne(domainClass, property, name)
+            if (str != null) {
+                out << str
+            }
+        }
+        else if (property.oneToMany)
+            out << renderOneToMany(domainClass, property)
+
+    private renderManyToOne(domainClass, property, name) {
+        if (property.association) {
+            def sb = new StringBuilder()
+            //println "property.manyToOne: ${property.manyToOne.toString()} property.oneToMany: ${property.oneToMany.toString()} property.oneToOne: ${property.oneToOne.toString()} property.manyToMany: ${property.manyToMany.toString()} property.isOwningSide: ${property.isOwningSide().toString()} property.bidirectional: ${property.bidirectional.toString()}"
+            if (property.oneToMany) {
+                sb << '<g:render template="/ng-templates/' << property.referencedPropertyType.simpleName.toLowerCase() << '/hasManyList" model="[subPrefix: ' << domainClass.name << 'SubPrefix + \'' << name << '\']" />'
+                sb << '<g:render template="/ng-templates/' << property.referencedPropertyType.simpleName.toLowerCase() << '/' << gspTemplateName << '" model="[subPrefix: ' << domainClass.name << 'SubPrefix + \'' << name << '\']" />'
+            } else {
+                sb << '<g:render template="/ng-templates/' << property.referencedPropertyType.simpleName.toLowerCase() << '/' << gspTemplateName << '" model="[subPrefix: \'' << name << '\']" />'
+            }
+            sb as String
+        }
+    }
+
+    private String renderBooleanEditor(domainClass, property, name) {
+        def sb = new StringBuilder()
+        sb << '<input type="checkbox"'
+        sb << ' id="' << name << '"'
+        sb << ' name="' << name << '"'
+        sb << getNgDataModel(domainClass, name)
+        sb << '>'
+        sb as String
+    }
+
+    private String renderNumberEditor(domainClass, property, name) {
+        def sb = new StringBuilder()
+        sb << '<input'
+        if (cp.range) {
+            sb << ' type="range"'
+			sb << ' id="' << name << '"'
+			sb << ' name="' << name << '"'
+			sb << getNgDataModel(domainClass, name)
+			sb << ' min="' << cp.range.from << '"'
+			sb << ' max="' << cp.range.to << '"'
+			sb << '<output for="' << name << '">{{' << name << '}}</output>'
+		} else {
+			if (property.type in [float, double, Float, Double, BigDecimal]) sb << ' type="text"'
+			else sb << ' type="number"'
+			sb << ' id="' << name << '"'
+			sb << ' name="' << name << '"'
+			sb << getNgDataModel(domainClass, name)
+			if (cp.min != null) sb << ' min="' << cp.min << '"'
+			if (cp.max != null) sb << ' max="' << cp.max << '"'
+			if (isRequired()) sb << ' required'
+			sb << '>'
+		}
+		sb as String
+    }
+
+    private String renderStringEditor(domainClass, property, name) {
+        def sb = new StringBuilder()
+        sb << '<input type="text"'
+        sb << ' id="' << name << '"'
+        sb << ' name="' << name << '"'
+        sb << getNgDataModel(domainClass, name)
+        if (cp.matches) sb << ' pattern="' << cp.matches << '"'
+        if (isRequired()) sb << ' required'
+        sb << '>'
+        sb as String
+    }
+
+    private boolean isRequired() {
+        !isOptional()
+    }
+
+    private boolean isOptional() {
+        if (!cp) {
+            //println "it is null"
+            return false
+        } else {
+            /* println "it is something else"
+            println 'is nullable ' + cp.nullable
+            println 'property type: ' + cp.propertyType
+            println 'blank ' + cp.blank
+            println 'returning: ' + cp.nullable || (cp.propertyType == String && cp.blank) || cp.propertyType in [boolean, Boolean] || (cp.propertyType == int && cp.blank) */
+            cp.nullable || (cp.propertyType == String && cp.blank) || cp.propertyType in [boolean, Boolean] || (cp.propertyType == int && cp.blank)
+        }
+    }
+
+    private String capitalizeFirstLetter(String input) {
+        return input.substring(0, 1).toUpperCase() + input.substring(1)
+    }
+
+    private String getNgDataModel(domainClass, name) {
+        def sb = new StringBuilder()
+        sb << ' data-ng-model='
+        if (includeItem) {
+            sb << '"item.'
+        } else {
+            sb << '"'
+        }
+        sb << '${' << domainClass.name << 'SubPrefix}' << name << '"'
+        sb as String
+    }
+%>
